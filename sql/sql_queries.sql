@@ -1,3 +1,24 @@
+-- =============================================
+
+
+-- CUSTOMER BEHAVIOUR & MARKET INSIGHT ANALYSIS - SQL QUERIES
+
+
+-- =============================================
+
+
+-- Developed by Ryadul Seam
+
+
+-- =============================================
+
+
+-- check the data type  
+
+
+-- =============================================
+
+
 select * from customer ;
 
 SELECT column_name
@@ -5,7 +26,13 @@ FROM information_schema.columns
 WHERE table_name = 'customer';
 
 
+-- =============================================
+
+
 -- 1. Top-Selling Categories
+
+-- =============================================
+
 
 select category , 
 		count (*) as total_sales ,
@@ -15,7 +42,14 @@ group by category
 order by total_revenue desc;
 
 
+-- =============================================
+
+
 -- 2. Customer Segmentation by Age Group
+
+
+-- =============================================
+
 
 select age_group , 
 		count (*) as customer_amount ,
@@ -24,13 +58,25 @@ from customer
 group by age_group 
 order by total_revenue desc; 
 
+
+-- =============================================
+
+
 -- 3. Churn Risk Detection (No Subscription)
 
 select count(*)  as potential_customers
 from customer
 where subscription_status = 'No';
 
+
+-- =============================================
+
+
 -- 4. Average Purchase Frequency by Segment
+
+
+-- =============================================
+
 
 select age_group , 
 		count (*) as customer_amount ,
@@ -38,8 +84,16 @@ select age_group ,
 from customer 
 group by age_group 
 order by Average_Purchase_Frequency_by_Segment desc; 
-		
+
+
+-- =============================================
+
+
 -- 5. Top Locations by Revenue
+
+
+-- =============================================
+
 
 select location , 
 		count (*) as customer_amount ,
@@ -49,7 +103,15 @@ group by location
 order by total_revenue desc
 limit 10 ;
 
+
+-- =============================================
+
+
 -- 6. Product Preferences by Gender
+
+
+-- =============================================
+
 
 select gender , 
 		category, 
@@ -59,7 +121,15 @@ from customer
 group by gender , category 
 order by  gender ,  total_revenue desc;
 
+
+-- =============================================
+
+
 -- 7. Shipping Type Impact on Revenue
+
+
+-- =============================================
+
 
 select shipping_type , 
 		category, 
@@ -69,7 +139,15 @@ from customer
 group by shipping_type , category 
 order by  shipping_type ,  total_revenue desc ;
 
+
+-- =============================================
+
+
 -- 8 Discount Effectiveness
+
+
+-- =============================================
+
 
 select discount_applied ,
 		count (*) as orders ,
@@ -79,7 +157,14 @@ group by discount_applied
 order by total_revenue ;
 
 
+-- =============================================
+
+
 -- 9. High-Value Customers (Top 10%)
+
+
+-- =============================================
+
 
 select * from customer 
 order by purchase_amount desc 
@@ -87,7 +172,15 @@ limit (
 		select count (*) * 0.1 from customer 
 );
 
+
+-- =============================================
+
+
 -- 10. Review Rating vs Purchase Amount
+
+
+-- =============================================
+
 
 select  customer_id , 
 		round (review_rating::numeric, 1) AS rating,
@@ -97,7 +190,15 @@ from customer
 group by ROUND(review_rating::numeric, 1) ,customer_id
 order by  rating desc;
 
+
+-- =============================================
+
+
 -- 11. Customer Lifetime Value Estimation
+
+
+-- =============================================
+
 
 select customer_id , 
 		sum (purchase_amount) as total_spent, 
@@ -107,7 +208,15 @@ group by customer_id
 order by total_spent 
 limit 10 ;
 
+
+-- =============================================
+
+
 --  12. Most Popular Items by Season
+
+
+-- =============================================
+
 
 select season ,
 		item_purchased ,
@@ -117,6 +226,8 @@ from customer
 group by season , item_purchased 
 order by season , total_order desc ;
 
+
+-- =============================================
 
 
 -- 13. Payment Method Preferences by Age Group
@@ -129,14 +240,14 @@ group by age_group ,payment_method
 order by age_group , total_order desc ; 
 
 
--- ['customer_id', 'age', 'gender', 'item_purchased', 'category',
-  --     'purchase_amount', 'location', 'size', 'color', 'season',
-    --   'review_rating', 'subscription_status', 'shipping_type',
-      -- 'discount_applied', 'promo_code_used', 'previous_purchases',
-      -- 'payment_method', 'frequency_of_purchases', 'age_group',
-      -- 'purchase_frequency_days']
+-- =============================================
+
 
 -- 14. Repeat Purchase Behavior
+
+
+-- =============================================
+
 
 select  customer_id ,
 		previous_purchases , 
@@ -145,7 +256,15 @@ from customer
 group by previous_purchases ,customer_id 
 order by customer_count desc ; 
 
+
+-- =============================================
+
+
 -- 15. Subscription Status vs Purchase Frequency
+
+
+-- =============================================
+
 
 select  
 		subscription_status,
@@ -155,7 +274,15 @@ from customer
 group by subscription_status 
 order by  avg_spend desc;
 
+
+-- =============================================
+
+
 -- 16. Subscription Status vs Purchase Frequency
+
+
+-- =============================================
+
 
 select  
 		subscription_status,
@@ -166,7 +293,15 @@ from customer
 group by subscription_status ,purchase_frequency_days
 order by subscription_status , avg_spend desc;
 
+
+-- =============================================
+
+
 -- 17 . Color Preferences by Gender
+
+
+-- =============================================
+
 
 select color , 
 		gender ,
@@ -176,7 +311,14 @@ group by color , gender
 order by gender , total_order desc ; 
 
 
+-- =============================================
+
+
 -- 18. Shipping Type vs Customer Satisfaction
+
+
+-- =============================================
+
 
 select shipping_type , 
 		round (avg (review_rating::numeric ),2 ) as average_review_rating ,  
@@ -184,8 +326,16 @@ select shipping_type ,
 from customer 
 group by shipping_type 
 order by average_review_rating desc ;
-		
+
+
+-- =============================================
+
+
 -- 18. High-Spending Customers Without Discounts
+
+
+-- =============================================
+
 
 select customer_id ,
 		purchase_amount  
@@ -194,7 +344,14 @@ where discount_applied = 'No'
 order by purchase_amount desc ;
 
 
+-- =============================================
+
+
 -- 19 . What is the total revenue generated by male vs. female customers?
+
+
+-- =============================================
+
 
 select gender ,
 		sum (purchase_amount) as total_revenue
@@ -202,7 +359,15 @@ from customer
 group by gender 
 order by total_revenue ;
 
+
+-- =============================================
+
+
 --20 .  Which customers used a discount but still spent more than the average purchase amount? 
+
+
+-- =============================================
+
 
 select customer_id , 
 		sum (purchase_amount) as total_revenue 
@@ -213,7 +378,14 @@ group by customer_id
 order by customer_id ;
 
 
+-- =============================================
+
+
 -- 21. Which are the top 5 products with the highest average review rating?
+
+
+-- =============================================
+
 
 select item_purchased , 
 		round (avg (review_rating::numeric ),2 ) as average_review_rating 
@@ -221,7 +393,15 @@ from customer
 group by item_purchased 
 order by average_review_rating ;
 
+
+-- =============================================
+
+
 --22. Compare the average Purchase Amounts between Standard and Express Shipping. 
+
+
+-- =============================================
+
 
 select round (avg (purchase_amount), 2) as average_Purchase_Amount,
 		shipping_type 
@@ -231,7 +411,17 @@ group by shipping_type
 order by average_Purchase_Amount desc ;
 
 
+-- =============================================
+
+
+-- =============================================
+
+
 --23. Do subscribed customers spend more? Compare average spend and total revenue  between subscribers and non-subscribers.
+
+
+-- =============================================
+
 
 select subscription_status , 
 		round (avg (purchase_amount), 2) as average_Purchase_Amount ,
@@ -239,7 +429,15 @@ select subscription_status ,
 from customer 
 group by subscription_status ;
 
+
+-- =============================================
+
+
 --24. Which 5 products have the highest percentage of purchases with discounts applied?
+
+
+-- =============================================
+
 
 select item_purchased , 
 		round (100.0 * sum (case 
@@ -252,7 +450,14 @@ order by discount_rate desc
 limit 5 ;
 
 
+-- =============================================
+
+
 --25. Segment customers into New, Returning, and Loyal based on their total  number of previous purchases, and show the count of each segment. 
+
+
+-- =============================================
+
 
 with customer_type as (
 
@@ -268,6 +473,7 @@ with customer_type as (
 
 ) 
 
+
 select customer_segment ,
 		count (*) as total_customer 
 from customer_type 
@@ -275,7 +481,15 @@ group by customer_segment
 order by total_customer desc ;
 
 
+
+-- =============================================
+
+
 -- 26 What are the top 3 most purchased products within each category? 
+
+
+-- =============================================
+
 
 with ranked as (
 
@@ -296,7 +510,15 @@ from ranked
 where rank <= 3 
 order by category , purchase_count desc ;
 
+
+-- =============================================
+
+
 --27. Are customers who are repeat buyers (more than 5 previous purchases) also likely to subscribe?
+
+
+-- =============================================
+
 
 select subscription_status , 
 		count (*) as repeted_buyers 
@@ -306,7 +528,13 @@ group by subscription_status
 order by subscription_status desc ;
 
 
+-- =============================================
+
+
 --28. What is the revenue contribution of each age group? 
+
+
+-- =============================================
 
 
 select age_group ,
@@ -318,11 +546,4 @@ order by total_revenue desc ;
 
 
 
-
-
-
-
-
-
-
-
+-- =============================================
