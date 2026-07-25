@@ -1,0 +1,156 @@
+// =============================================
+
+// CUSTOMER BEHAVIOUR & MARKET INSIGHT ANALYSIS -DAX MEASURES
+
+// =============================================
+
+// Developed by Ryadul Seam
+
+// =============================================
+
+// 1. Avg Purchase Amount:
+
+Avg Purchase Amount = AVERAGE('public customer'[purchase_amount])
+
+Avg Review Rating = AVERAGE('public customer'[review_rating])
+
+
+// 2. Category Insight:
+
+Category Insight = 
+VAR CategoryRevenueTable =
+    SUMMARIZE(
+        'public customer',
+        'public customer'[category],
+        "Revenue", SUM('public customer'[purchase_amount])
+    )
+VAR TopCategoryRevenue =
+    MAXX(CategoryRevenueTable, [Revenue])
+VAR CategoryName =
+    MAXX(
+        FILTER(CategoryRevenueTable, [Revenue] = TopCategoryRevenue),
+        'public customer'[category]
+    )
+RETURN
+"Key Insight: " & CategoryName & " remains the dominant category"
+
+
+// 3. Detractors:
+
+
+Detractors = 
+CALCULATE(
+    COUNTROWS('public customer'),
+    'public customer'[review_rating] <= 2
+)
+// 4. Executive Summary:
+
+Executive Summary = 
+VAR AgeRevenueTable =
+    SUMMARIZE('public customer', 'public customer'[Age Group], "Revenue", SUM('public customer'[purchase_amount]))
+VAR TopAgeGroup =
+    MAXX(FILTER(AgeRevenueTable, [Revenue] = MAXX(AgeRevenueTable, [Revenue])), 'public customer'[Age Group])
+
+VAR CategoryRevenueTable =
+    SUMMARIZE('public customer', 'public customer'[Category], "Revenue", SUM('public customer'[purchase_amount]))
+VAR TopCategory =
+    MAXX(FILTER(CategoryRevenueTable, [Revenue] = MAXX(CategoryRevenueTable, [Revenue])), 'public customer'[Category])
+
+VAR NPSValue = [NPS]   -- use your existing NPS measure
+RETURN
+"Executive Summary: " &
+TopAgeGroup & " segment leads revenue, " &
+TopCategory & " dominates category, " &
+"Current NPS = " & FORMAT(NPSValue, "0.0")
+
+
+// 5. Key Insight:
+
+Key Insight = 
+VAR AgeRevenueTable =
+    SUMMARIZE(
+        'public customer',
+        'public customer'[Age Group],
+        "Revenue", SUM('public customer'[purchase_amount])
+    )
+VAR TopAgeGroupRevenue =
+    MAXX(AgeRevenueTable, [Revenue])
+VAR AgeGroupName =
+    MAXX(
+        FILTER(AgeRevenueTable, [Revenue] = TopAgeGroupRevenue),
+        'public customer'[Age Group]
+    )
+RETURN
+"Key Insight: " & AgeGroupName & " driving highest revenue growth"
+
+// 6. NPS:
+
+NPS = 
+DIVIDE([Promoters] - [Detractors], [Total Responses]) * 100
+
+// 7. Passives:
+
+Passives = 
+CALCULATE(
+    COUNTROWS('public customer'),
+    'public customer'[review_rating] > 2 &&
+    'public customer'[review_rating] < 4
+)
+
+
+// 8. Promoters:
+
+Promoters = 
+CALCULATE(
+    COUNTROWS('public customer'),
+    'public customer'[review_rating] >= 4
+)
+
+// 9. Revenue by Category:
+
+Revenue by Category = 
+SUM('public customer'[purchase_amount])
+
+
+// 10. Total Customer:
+
+Total Customer = COUNT('public customer'[customer_id])
+
+
+// 11. Total Responses:
+
+Total Responses = 
+COUNTROWS('public customer')
+
+
+// 12. Total Revenue:
+
+Total Revenue = SUM('public customer'[purchase_amount])
+
+
+// 13. Age Group & Age Group Sorting:
+
+Age Group = 
+SWITCH(
+    TRUE(),
+    'public customer'[age] <= 25, "Young Adult",
+    'public customer'[age] <= 40, "Middle-Aged",
+    'public customer'[age] <= 60, "Adult",
+    "Senior"
+)
+
+
+Age Group Sort = 
+SWITCH(
+    'public customer'[Age Group],
+    "Young Adult", 1,
+    "Middle-Aged", 2,
+    "Adult", 3,
+    "Senior", 4
+)
+
+
+// 13. Avg Review Rating:
+
+Avg Review Rating = AVERAGE('public customer'[review_rating])
+
