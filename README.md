@@ -2,7 +2,7 @@
 
 **End-to-End Customer Analytics & Predictive Business Intelligence Solution for a Multi-Category Retail Business**
 
-![Dashboard Overview](dashboard_images/overview.png)
+![Dashboard Overview](dashboard_images/Overview.png)
 
 Analyzing **3,901 customers** across demographics, subscriptions, and shipping experience to uncover revenue drivers, loyalty gaps, and growth opportunities using **SQL, Python, and Power BI**.
 
