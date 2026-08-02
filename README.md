@@ -278,7 +278,9 @@ python scripts/Predicting_Transaction_Revenue.py
 
 ### View the Dashboard
 
-Open the Power BI `.pbix` file ( not included in this repo for size reasons, DM me on [linkedin.com/in/ryadulseam-data](https://www.linkedin.com/in/ryadulseam-data) for the live .pbix file ) and connect it to your local PostgreSQL instance, or explore the static exports in `dashboard_images/`.
+Explore the static page exports in `dashboard_images/`, or open the SQL queries and DAX measures directly to see the logic behind the dashboard.
+
+The `.pbix` file itself isn't shared publicly, to prevent unauthorized reuse (a live file can too easily be re-uploaded under someone else's name). If you're a business looking for a similar dashboard, ETL pipeline, or forecasting model built on **your own** operational data, reach out via [LinkedIn](https://www.linkedin.com/in/ryadulseam-data) or email — I build these end-to-end for retail/logistics teams.
 
 ---
 
@@ -303,14 +305,13 @@ Open the Power BI `.pbix` file ( not included in this repo for size reasons, DM 
 ## 👤 Author & Contact
 
 **Ryadul Seam**
-
 **Data Analytics & Power BI Consultant | Founder @ SEAM ANALYTICS**
 
-**I help Finance, Operations, Retail, Logistics, and E-commerce teams turn messy raw data into clear, actionable business insights.**
+I help Retail, Logistics, and Mobility teams turn raw operational data into clear, actionable business insights — from ETL pipelines and forecasting models to interactive Power BI dashboards like this one, built on your own operational data.
 
-- 📧 Email: [ryadulisla@gmail.com](mailto:ryadulisla@gmail.com)
-- 🔗 LinkedIn: [linkedin.com/in/ryadulseam-data](https://www.linkedin.com/in/ryadulseam-data)
-- 🔗 Portfolio: [Ryadul Seam | Data Analyst | Portfolio](https://substantial-vole-da7.notion.site/Ryadul-Seam-Data-Analyst-Portfolio-2d8fd4f37d128056b5aeeee355a325fe)
+- 📧 Email: ryadulisla@gmail.com
+- 🔗 LinkedIn: linkedin.com/in/ryadulseam-data
+- 💻 GitHub: github.com/RyadulSeam
 
 Feel free to connect or reach out to collaborate on your next analytics project.
 
